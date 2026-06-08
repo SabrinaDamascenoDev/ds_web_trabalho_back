@@ -14,13 +14,13 @@ class LivrosRepository {
                 l.titulo,
                 l.autor,
                 l.capa,
-                l.qtd_paginas,
                 l.genero,
-                l.status
+                l.qtd_paginas,
+                l.status,
+                l.qtd_lido
             )
         );
     }
-
     async buscarPorId(id) {
         const l = db.prepare(
             "SELECT * FROM livros WHERE id = ?"
@@ -33,30 +33,32 @@ class LivrosRepository {
             l.titulo,
             l.autor,
             l.capa,
-            l.qtd_paginas,
             l.genero,
-            l.status
-        );
+            l.qtd_paginas,
+            l.status,
+            l.qtd_lido
+        )
     }
 
-    async criar(titulo, autor, capa, genero, qtd_paginas, status) {
+    async criar(titulo, autor, capa, genero, qtd_paginas, status, qtd_lido) {
         const result = db.prepare(`
             INSERT INTO livros
-            (titulo, autor, capa, genero, qtd_paginas, status)
-            VALUES (?, ?, ?, ?, ?, ?)
+            (titulo, autor, capa, genero, qtd_paginas, status, qtd_lido)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         `).run(
             titulo,
             autor,
             capa,
             genero,
             qtd_paginas,
-            status
+            status,
+            qtd_lido,
         );
 
         return result.lastInsertRowid;
     }
 
-    async atualizar(id, titulo, autor, capa, genero, qtd_paginas, status) {
+    async atualizar(id, titulo, autor, capa, genero, qtd_paginas, status, qtd_lido) {
         const result = db.prepare(`
             UPDATE livros
             SET
@@ -65,7 +67,8 @@ class LivrosRepository {
                 capa = ?,
                 genero = ?,
                 qtd_paginas = ?,
-                status = ?
+                status = ?,
+                qtd_lido = ?
             WHERE id = ?
         `).run(
             titulo,
@@ -74,6 +77,7 @@ class LivrosRepository {
             genero,
             qtd_paginas,
             status,
+            qtd_lido,
             id
         );
 

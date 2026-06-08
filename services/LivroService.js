@@ -1,4 +1,4 @@
-const livroRepository = require("../repositories/LivrosRepository");
+const livroRepository = require("../repositories/LivroRepositorie");
 
 class LivroService {
 
@@ -12,20 +12,21 @@ class LivroService {
         return livro;
     }
 
-    async criar(titulo, autor, capa, genero, qtd_paginas, status) {
+    async criar(livro) {
         const id = await livroRepository.criar(
-            titulo,
-            autor,
-            capa,
-            genero,
-            qtd_paginas,
-            status
+            livro.titulo,
+            livro.autor,
+            livro.capa,
+            livro.genero,
+            livro.qtd_paginas,
+            livro.status,
+            livro.qtd_lido
         );
 
         return id;
     }
 
-    async atualizar(id, titulo, autor, capa, genero, qtd_paginas, status) {
+    async atualizar(id, titulo, autor, capa, genero, qtd_paginas, status, qtd_lido) {
         const atualizado = await livroRepository.atualizar(
             id,
             titulo,
@@ -33,7 +34,8 @@ class LivroService {
             capa,
             genero,
             qtd_paginas,
-            status
+            status,
+            qtd_lido
         );
 
         return atualizado;
