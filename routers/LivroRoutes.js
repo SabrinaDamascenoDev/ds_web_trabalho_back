@@ -55,14 +55,19 @@ router.post(
 router.put(
     "/:id",
     async (request, response) => {
-        const atualizado = await livroService.atualizar(
-            request.params.id,
-            request.body
-        );
+        try {
+            const atualizado = await livroService.atualizar(
+                request.params.id,
+                request.body
+            );
 
-        response.json({
-            atualizado
-        });
+            response.json({ atualizado });
+        } catch (error) {
+            console.error("Erro ao atualizar livro:", error);
+            response.status(500).json({
+                mensagem: "Erro ao atualizar o livro"
+            });
+        }
     }
 );
 
