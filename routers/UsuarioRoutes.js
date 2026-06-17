@@ -24,4 +24,14 @@ router.put("/", async (request, response) => {
     });
 });
 
+router.put("/senha", async (request, response) => {
+    const resultado = await usuarioService.alterarSenha(request.body);
+
+    if (!resultado.sucesso) {
+        return response.status(400).json(resultado);
+    }
+
+    response.json(resultado);
+});
+
 module.exports = router;
