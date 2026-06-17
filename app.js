@@ -1,6 +1,7 @@
 const express = require("express")
 
 const livroRouter = require('./routers/LivroRoutes')
+const usuarioRouter = require('./routers/UsuarioRoutes')
 
 const app = express()
 const port = 3000
@@ -8,6 +9,7 @@ const port = 3000
 app.use(express.json()); 
 
 app.use("/api/livros", livroRouter)
+app.use("/api/usuario", usuarioRouter)
 
 app.use(
     (request, resolve) => {
