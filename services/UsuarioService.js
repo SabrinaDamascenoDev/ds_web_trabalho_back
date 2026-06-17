@@ -24,6 +24,21 @@ class UsuarioService {
 
         return salvo;
     }
+    async alterarSenha(dados) {
+    if (dados.novaSenha !== dados.confirmarSenha) {
+        return {
+            sucesso: false,
+            mensagem: "A nova senha e a confirmação não conferem"
+        };
+    }
+
+    const resultado = await usuarioRepository.alterarSenha(
+        dados.senhaAtual,
+        dados.novaSenha
+    );
+
+        return resultado;
+    }
 }
 
 module.exports = new UsuarioService();
