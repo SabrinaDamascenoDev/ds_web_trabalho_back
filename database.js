@@ -24,4 +24,11 @@ db.exec(`
     )
 `);
 
+try {
+    db.prepare(`
+        ALTER TABLE usuarios ADD COLUMN senha TEXT DEFAULT '123456'
+    `).run();
+} catch (erro) {
+}
+
 module.exports = db;

@@ -31,6 +31,37 @@ class UsuarioRepository {
 
         return result.changes > 0;
     }
+
+    async alterarSenha(senhaAtual, novaSenha) {
+        const usuario = db.prepare(
+            "SELECT * FROM usuarios WHERE id = 1"
+        ).get();
+
+        if (!usuario) {
+            return {
+                sucesso: false,
+                mensagem: "Usuário não encontrado"
+            };
+        }
+
+        if (usuario.senha !== senhaAtual) {
+            return {
+                sucesso: false,
+                mensagem: "Senha atual incorreta"
+            };
+        }
+
+        db.prepare(`
+            UPDATE usuarios
+            SET senha = ?
+            WHERE id = 1
+        `).run(novaSenha);
+
+        return {
+            sucesso: true,
+            mensagem: "Senha atualizada com sucesso"
+        };
+    }
 }
 
 module.exports = new UsuarioRepository();
